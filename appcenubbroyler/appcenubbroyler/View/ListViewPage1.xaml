@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="appcenubbroyler.View.ListViewPage1"
+             x:Name="LstPage">
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Order="Primary" Priority="1" Clicked="onNew"></ToolbarItem>
+        <ToolbarItem Text="Refresh" Order="Primary" Priority="2" Clicked="onRefresh"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <Grid>
+
+
+            <ListView x:Name="lstStudents"
+            ItemsSource="{Binding}"
+            ItemSelected="onSelected"
+            CachingStrategy="RecycleElement">
+
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Sname}"  />
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+                   IsVisible="{Binding Source={x:Reference LstPage}, Path=IsBusy}">
+                <Label Text="Loading Data..." TextColor="Silver" HorizontalOptions="Center"></Label>
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference LstPage}, Path=IsBusy}">
+
+                </ActivityIndicator>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+
+
+</ContentPage>

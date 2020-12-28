@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="appcenubbroyler.View.DetailPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <TableView Intent="Form">
+                <TableRoot>
+                    <TableSection Title="Update Student Form">
+                        <EntryCell x:Name="txtName" Label="Ad"></EntryCell>
+                        <EntryCell x:Name="txtSurname" Label="Soyad"></EntryCell>
+                        <EntryCell x:Name="txtPhone" Label="Telefon"></EntryCell>
+                        <EntryCell x:Name="txtEmail" Label="Email"></EntryCell>
+                        <EntryCell x:Name="txtPassword" Label="Parol"></EntryCell>
+                        
+                        <ViewCell>
+                            <DatePicker x:Name="dtpckrBirthDate"></DatePicker>
+                        </ViewCell>
+                        <ViewCell>
+                            <Button x:Name="btnUpdate" CommandParameter="{Binding}" Text="UPDATE" Clicked="onUpdate"></Button>
+                        </ViewCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

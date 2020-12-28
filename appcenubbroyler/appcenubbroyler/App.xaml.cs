@@ -1,4 +1,5 @@
-﻿using System;
+﻿using appcenubbroyler.View;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +12,7 @@ namespace appcenubbroyler
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new ListViewPage1());
         }
 
         protected override void OnStart()
