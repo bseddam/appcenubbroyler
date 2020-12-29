@@ -27,7 +27,7 @@ namespace appcenubbroyler.View
         private async void onUpdate(object sender, EventArgs e)
         {
             Button myButton = (Button)sender;
-            var updatedUser = (Users)myButton.CommandParameter;
+            Users updatedUser = (Users)myButton.CommandParameter;
             Users model = new Users
             {
                 Name = txtName.Text,

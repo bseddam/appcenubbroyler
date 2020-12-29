@@ -41,14 +41,15 @@ namespace appcenubbroyler.Provider
             return await Process(model, "insert");
         }
 
-        public async Task<MobileResult> Delete(Users model)
-        {
-            return await Process(model, "delete");
-        }
-
         public async Task<MobileResult> Update(Users model)
         {
             return await Process(model, "update");
+        }
+
+
+        public async Task<MobileResult> Delete(Users model)
+        {
+            return await Process(model, "delete");
         }
     }
 }

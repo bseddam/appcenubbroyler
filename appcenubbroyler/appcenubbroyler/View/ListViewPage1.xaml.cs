@@ -1,11 +1,7 @@
 ﻿using appcenubbroyler.Model;
 using appcenubbroyler.Provider;
 using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,8 +12,11 @@ namespace appcenubbroyler.View
     {
         readonly ServiceManager manager = new ServiceManager();
        
+
+      
         public ListViewPage1()
         {
+            //BindingContext = users;
             InitializeComponent();
 
             LoadData();
@@ -36,10 +35,10 @@ namespace appcenubbroyler.View
             this.IsBusy = true;
             try
             {
-             
-                await Task.Delay(1000);
-                var collection = await manager.GetAll();
-                lstStudents.BindingContext = collection;
+                List<Users> users = new List<Users>();
+                //await Task.Delay(1000);
+                users = await manager.GetAll();
+                lstStudents.BindingContext = users;
                 
             }
             finally
@@ -59,7 +58,19 @@ namespace appcenubbroyler.View
             lstView.SelectedItem = null;
         }
 
+        private async void onDelete(object sender, EventArgs e)
+        {
 
-       
+            MenuItem menuItem = (MenuItem)sender;
+            Users selectedUser = (Users)menuItem.CommandParameter;
+            bool isOk = await DisplayAlert("", "Silməyə əminsinizmi?", "Bəli", "Xeyr");
+            if (isOk)
+            {
+                await manager.Delete(selectedUser);
+                //users.Remove(selectedUser);
+                LoadData();
+            }
+        }
+
     }
 }
