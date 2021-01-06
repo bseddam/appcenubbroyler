@@ -68,7 +68,7 @@ namespace appcenubbroyler.View
             {
                 await manager.Delete(selectedUser);
                 //users.Remove(selectedUser);
-                LoadData();
+                //LoadData();
             }
         }
 

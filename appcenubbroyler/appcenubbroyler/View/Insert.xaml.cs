@@ -18,7 +18,7 @@ namespace appcenubbroyler.View
         public Insert()
         {
             InitializeComponent();
-
+           // txtName.Completed += (s, e) => txtSurname.Focus();
         }
 
         private async void onSave(object sender, EventArgs e)

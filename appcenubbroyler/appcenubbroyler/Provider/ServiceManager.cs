@@ -10,7 +10,7 @@ namespace appcenubbroyler.Provider
 {
     class ServiceManager
     {
-        private string Url = "http://192.168.2.5/api/Users/";
+        private string Url = "http://192.168.2.4/api/Users/";
         private async Task<HttpClient> GetClient()
         {
             HttpClient client = new HttpClient();
