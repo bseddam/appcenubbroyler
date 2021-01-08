@@ -9,7 +9,7 @@ namespace appcenubbroyler.Provider
     {
         public static string RestUrlAdress =
     Device.RuntimePlatform == Device.Android ?
-    "http://localhost/api/Users/" :
+    "http://192.168.2.7/api/Users/" :
     "http://192.168.2.7/api/Users/";
     }
 }

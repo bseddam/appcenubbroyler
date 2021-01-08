@@ -12,7 +12,7 @@ namespace appcenubbroyler.Provider
 {
     class ServiceManager
     {
-        private string Url = "http://192.168.2.7/api/Users/";
+        //private string Url = "http://192.168.2.7/api/Users/";
         HttpClient client;
         public ServiceManager()
         {
@@ -24,38 +24,29 @@ namespace appcenubbroyler.Provider
 #endif
         }
 
-        private async Task<HttpClient> GetClient()
-        {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
-            return client;
-        }
+       
         public async Task<List<Users>> GetAll()
         {
-            HttpClient client1 = await GetClient();
-            var result = await client1.GetStringAsync(Url + "getallusers");
-            var mobileResult = JsonConvert.DeserializeObject<MobileResult>(result);
-            return JsonConvert.DeserializeObject<List<Users>>
-                (mobileResult.Data.ToString());
-            //Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "getallusers", string.Empty));
-            //List<Users> userslist = null;
-            //try
-            //{
-            //    HttpResponseMessage response = await client.GetAsync(Url);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        string mobileResult1 = await response.Content.ReadAsStringAsync();
-            //        MobileResult mobileResult2 = JsonConvert.DeserializeObject<MobileResult>(mobileResult1);
-            //        userslist = JsonConvert.DeserializeObject<List<Users>>
-            //        (mobileResult2.Data.ToString());
-            //        Debug.WriteLine(@"\getalluser successfully(ugurlu)");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine(@"\tERROR {0}", ex.Message);
-            //}
-            //return userslist;
+
+            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "getallusers", string.Empty));
+            List<Users> userslist = null;
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(Url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string mobileResult1 = await response.Content.ReadAsStringAsync();
+                    MobileResult mobileResult2 = JsonConvert.DeserializeObject<MobileResult>(mobileResult1);
+                    userslist = JsonConvert.DeserializeObject<List<Users>>
+                    (mobileResult2.Data.ToString());
+                    Debug.WriteLine(@"\getalluser successfully(ugurlu)");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+            return userslist;
         }
         public async Task<MobileResult> Insert(Users users)
         {
@@ -105,7 +96,8 @@ namespace appcenubbroyler.Provider
 
         public async Task<MobileResult> Delete(Users users)
         {
-            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "delete", string.Empty));
+            
+            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "delete", users));
             MobileResult result = null;
             try
             {
@@ -115,7 +107,7 @@ namespace appcenubbroyler.Provider
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine(@"\update successfully(ugurlu).");
+                    Debug.WriteLine(@"\delete successfully(ugurlu).");
                 }
             }
             catch (Exception ex)
