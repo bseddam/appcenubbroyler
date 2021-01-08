@@ -2,54 +2,127 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace appcenubbroyler.Provider
 {
     class ServiceManager
     {
-        private string Url = "http://192.168.2.4/api/Users/";
+        private string Url = "http://192.168.2.7/api/Users/";
+        HttpClient client;
+        public ServiceManager()
+        {
+            client = new HttpClient();
+#if DEBUG
+            //client = new HttpClient(DependencyService.Get<IHttpClientHandlerService>().GetInsecureHandler());
+#else
+            client = new HttpClient();
+#endif
+        }
+
         private async Task<HttpClient> GetClient()
         {
             HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
             return client;
         }
         public async Task<List<Users>> GetAll()
         {
-            HttpClient client = await GetClient();
-            var result = await client.GetStringAsync(Url + "getallusers");
-            MobileResult mobileResult = 
-                JsonConvert.DeserializeObject<MobileResult>(result);
+            HttpClient client1 = await GetClient();
+            var result = await client1.GetStringAsync(Url + "getallusers");
+            var mobileResult = JsonConvert.DeserializeObject<MobileResult>(result);
             return JsonConvert.DeserializeObject<List<Users>>
                 (mobileResult.Data.ToString());
+            //Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "getallusers", string.Empty));
+            //List<Users> userslist = null;
+            //try
+            //{
+            //    HttpResponseMessage response = await client.GetAsync(Url);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        string mobileResult1 = await response.Content.ReadAsStringAsync();
+            //        MobileResult mobileResult2 = JsonConvert.DeserializeObject<MobileResult>(mobileResult1);
+            //        userslist = JsonConvert.DeserializeObject<List<Users>>
+            //        (mobileResult2.Data.ToString());
+            //        Debug.WriteLine(@"\getalluser successfully(ugurlu)");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            //}
+            //return userslist;
         }
-        public async Task<MobileResult> Process(Users users, string processType)
+        public async Task<MobileResult> Insert(Users users)
         {
-            HttpClient client = await GetClient();
-            var response = await client.PostAsync(Url + processType,
-                new StringContent(JsonConvert.SerializeObject(users),Encoding.UTF8, 
-                "application/json"));
-            var mobileresult = await response.Content.ReadAsStringAsync();
-            MobileResult result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
+            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "insert", string.Empty));
+            MobileResult result = null;
+            try
+            {
+                string json = JsonConvert.SerializeObject(users);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(Url, content);
+                string mobileresult = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"\insert successfully(ugurlu).");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+
+            return result;
+        }
+        public async Task<MobileResult> Update(Users users)
+        {
+            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "update", string.Empty));
+            MobileResult result = null;
+            try
+            {
+                string json = JsonConvert.SerializeObject(users);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync(Url, content);
+                string mobileresult = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"\update successfully(ugurlu).");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
             return result;
         }
 
-        public async Task<MobileResult> Insert(Users model)
+        public async Task<MobileResult> Delete(Users users)
         {
-            return await Process(model, "insert");
-        }
+            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "delete", string.Empty));
+            MobileResult result = null;
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(Url);
+                string mobileresult = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
 
-        public async Task<MobileResult> Update(Users model)
-        {
-            return await Process(model, "update");
-        }
-
-
-        public async Task<MobileResult> Delete(Users model)
-        {
-            return await Process(model, "delete");
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"\update successfully(ugurlu).");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+            return result;
         }
     }
 }

@@ -6,7 +6,7 @@
         <StackLayout Orientation="Vertical">
             <TableView Intent="Form">
                 <TableRoot>
-                    <TableSection Title="Update Student Form">
+                    <TableSection Title="Users dəyiş">
                         <EntryCell x:Name="txtName" Label="Ad"></EntryCell>
                         <EntryCell x:Name="txtSurname" Label="Soyad"></EntryCell>
                         <EntryCell x:Name="txtPhone" Label="Telefon"></EntryCell>

@@ -26,12 +26,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchArch>x86_64</MtouchArch>
+    <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <MtouchHttpClientHandler>CFNetworkHandler</MtouchHttpClientHandler>
+    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchSdkVersion>
     </MtouchSdkVersion>
+    <DeviceSpecificBuild>false</DeviceSpecificBuild>
+    <OptimizePNGs>true</OptimizePNGs>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -159,10 +162,16 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.Build">
+      <Version>1.0.21</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Net.Http">
+      <Version>2.2.29</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -171,4 +180,9 @@
       <Name>appcenubbroyler</Name>
     </ProjectReference>
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
