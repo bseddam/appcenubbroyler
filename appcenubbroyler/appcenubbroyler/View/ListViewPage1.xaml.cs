@@ -38,7 +38,7 @@ namespace appcenubbroyler.View
                 List<Users> users = new List<Users>();
                 //await Task.Delay(1000);
                 users = await manager.GetAll();
-                lstStudents.BindingContext = users;
+                lstuser.BindingContext = users;
                 
             }
             finally
@@ -64,9 +64,9 @@ namespace appcenubbroyler.View
             MenuItem menuItem = (MenuItem)sender;
             Users selectedUser = (Users)menuItem.CommandParameter;
             bool isOk = await DisplayAlert("", "Silməyə əminsinizmi?", "Bəli", "Xeyr");
-            if (isOk)
+            if (isOk && selectedUser!=null)
             {
-                await manager.Delete(selectedUser);
+                await manager.Delete(selectedUser.UserID.ToString());
                 //users.Remove(selectedUser);
                 //LoadData();
             }

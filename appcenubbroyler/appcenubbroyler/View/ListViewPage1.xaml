@@ -14,7 +14,7 @@
         <Grid>
 
 
-            <ListView x:Name="lstStudents"
+            <ListView x:Name="lstuser"
             ItemsSource="{Binding}"
             ItemSelected="onSelected"
             SeparatorVisibility="None">

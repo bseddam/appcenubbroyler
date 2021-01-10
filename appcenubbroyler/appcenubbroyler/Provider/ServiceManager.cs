@@ -80,10 +80,11 @@ namespace appcenubbroyler.Provider
                 string json = JsonConvert.SerializeObject(users);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PutAsync(Url, content);
-                string mobileresult = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
+               
                 if (response.IsSuccessStatusCode)
                 {
+                    string mobileresult = await response.Content.ReadAsStringAsync();
+                    result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
                     Debug.WriteLine(@"\update successfully(ugurlu).");
                 }
             }
@@ -94,19 +95,19 @@ namespace appcenubbroyler.Provider
             return result;
         }
 
-        public async Task<MobileResult> Delete(Users users)
+        public async Task<MobileResult> Delete(string userid)
         {
-            
-            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress + "delete", users));
+            Uri Url = new Uri(string.Format(RestUrl.RestUrlAdress+"delete/"+ userid, userid));
             MobileResult result = null;
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync(Url);
-                string mobileresult = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
+               
 
                 if (response.IsSuccessStatusCode)
                 {
+                    string mobileresult = await response.Content.ReadAsStringAsync();
+                    result = JsonConvert.DeserializeObject<MobileResult>(mobileresult);
                     Debug.WriteLine(@"\delete successfully(ugurlu).");
                 }
             }
